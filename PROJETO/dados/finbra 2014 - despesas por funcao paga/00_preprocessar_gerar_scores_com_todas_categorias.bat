@@ -1,7 +1,8 @@
 set FILE=all_scores_2.csv
 
 copy ..\..\Preprocessamento\bin\Preprocessamento.class Preprocessamento.class
-java Preprocessamento --finbra false < finbra_original.csv > finbra_preprocessado_absoluto.csv
+java Preprocessamento --finbra true < finbra_original.csv > finbra_preprocessado_absoluto_temp.csv
+java Preprocessamento --remove ; 32 < finbra_preprocessado_absoluto_temp.csv > finbra_preprocessado_absoluto.csv
 java Preprocessamento --remove ; 0 2 < finbra_preprocessado_absoluto.csv > finbra_preprocessado_absoluto_com_pop.csv
 java Preprocessamento --remove ; 0 2 3 < finbra_preprocessado_absoluto.csv > finbra_preprocessado_absoluto_sem_pop.csv
 java Preprocessamento --normalize log ignore[0] < finbra_preprocessado_absoluto_com_pop.csv > finbra_preprocessado_absoluto_com_pop_suavizado.csv
