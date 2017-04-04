@@ -1,7 +1,7 @@
-set OUTPUT=anomalies_1.1_70.csv
+set OUTPUT=anomalies_1.3_70.csv
 set INPUT=all_scores.csv
 set LOF=36
-set MIN=1.1
+set MIN=1.3
 SET K=70
 
 copy ..\..\Preprocessamento\bin\Preprocessamento.class Preprocessamento.class
