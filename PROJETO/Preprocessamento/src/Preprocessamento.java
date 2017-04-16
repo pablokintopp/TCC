@@ -24,8 +24,14 @@ public class Preprocessamento {
 	//FINBRA Despesas Por Função - Pagas
 	public static String FINBRA_DPF_PAGAS = "--finbra";
 	
+	//FINBRA Despesas Por Função - Pagas 2004 - 2012
+		public static String FINBRA_DPF_PAGAS_OLD = "--fibraold";
+		
 	//para remover atributos nao necessarios
 	public static String REMOVE_ATRIBUTES = "--remove";
+	
+	//para remover atributos nao necessarios
+		public static String FIX_COD_IBGE = "--codigbe";
 	
 	//Para suavizar/normalizar os dados
 	public static String NORMALIZE = "--normalize";
@@ -49,6 +55,9 @@ public class Preprocessamento {
 	//Substitui pontos por virgula
 		public static String HELPER ="--helper";
 	
+		//Substitui pontos por virgula
+				public static String DEBUG ="--debug";	
+		
 	//Buffer para ler a entrada de arquivo ou console
 	BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 	
@@ -91,6 +100,12 @@ public class Preprocessamento {
 			p.moduloExplanation(args);
 		}else if(parametro.equals(RANKING)) {
 			p.moduloRanking(args);
+		}else if(parametro.equals(FINBRA_DPF_PAGAS_OLD)) {
+			p.moduloMergeCod(args);
+		}else if(parametro.equals(FIX_COD_IBGE)) {
+			p.moduloFixCodIbge(args);
+		}else if(parametro.equals(DEBUG)) {
+			p.moduloDebug(args);
 		}else{			
 			System.out.println("Parametro inválido");
 		}
@@ -98,6 +113,71 @@ public class Preprocessamento {
 	}
 	
 	
+	private void moduloDebug(String[] args) throws IOException {
+		String line;
+		while((line=in.readLine())!=null) {
+			
+			System.out.println(line);
+		}
+		
+	}
+
+
+	private void moduloFixCodIbge(String[] args) throws IOException {
+		// TODO remove numero extra do ibge das colunas dos anos 20013 2014 e 2015
+		
+		String line;
+		while((line=in.readLine())!=null) {
+			String[] cols = line.split(";");
+			if(cols[0].charAt(0) == '#'){
+				System.out.println(line);		
+				//senao se tiver no minimo o LOF que procuramos prossegue
+			}else{
+				cols[1] = cols[1].trim();
+				cols[1] = cols[1].substring(0, cols[1].length()-1);
+				String outputLine = "";
+				for(int i = 0; i < cols.length ; i++){					
+						outputLine = outputLine.length() > 1 ? outputLine+";"+cols[i] : outputLine+cols[i]; 					
+				}
+				System.out.println(outputLine);	
+			}
+			}
+		
+	}
+
+
+	private void moduloMergeCod(String[] args) throws IOException {
+		// merge coluna 0 e 1 para gerar cod ibge dessas instancias
+		String line;
+		while((line=in.readLine())!=null) {
+			String[] cols = line.split(";");
+			if(cols[0].charAt(0) == '#' || cols[0].charAt(0) == '"'|| cols[0].charAt(0) == 'C'){
+				if(cols[0].charAt(0) != '#')
+					cols[0] = "#"+cols[0];
+				line = line.toLowerCase().replaceAll("cduf;cdmun", "CodIBGE");
+				line = line.toLowerCase().replaceAll("cduf\";\"cdmun", "CodIBGE");
+				System.out.println(line);		
+				//senao se tiver no minimo o LOF que procuramos prossegue
+			}else{
+				if(cols[0].contains(",") ||cols[0].contains(".")  )
+					cols[0] = cols[0].split("[,.]")[0];
+				if(cols[1].contains(",") ||cols[1].contains(".")  )
+					cols[1] = cols[1].split("[,.]")[0];
+				
+				String cod = cols[1].trim();
+				while(cod.length() < 4)
+					cod = "0"+cod;
+				cols[1] = cols[0].trim()+ cod;
+				String outputLine = "";
+				for(int i = 1; i < cols.length ; i++){					
+						outputLine = outputLine.length() > 1 ? outputLine+";"+cols[i] : outputLine+cols[i]; 					
+				}
+				System.out.println(outputLine);	
+			}
+			}
+	}
+
+
 	//MODULO GERAR OS RANKINGS DAS CATEGORIAS QUE MAIS INFLUENCIARAM PARA A INSTANCIA SER CONSIDERADA ANORMAL (DE ACORDO COM O METODO DO CENTROID)
 	private void moduloRanking(String[] args) throws IOException  {
 		
@@ -690,8 +770,18 @@ public class Preprocessamento {
 			if(cols.length > 1){
 				//verifica se a linha nao é o cabeçalho
 				if(!isHeader){
+					boolean ignore = true;
+					if(ignoreSpecifics){
+						if(!cols[4].contains(".")){
+							ignore = false;
+						}
+					}else {
+						ignore = false;
+						
+					}
+					
 					//prossegue de acordo com o parametro ignoreSpecifics
-					if((ignoreSpecifics && !cols[4].contains(".")) || ignoreSpecifics == false){
+					if(!ignore){
 						key = cols[0];
 						//verifica se essa instancia ja existe no hashmap
 						if(!table.containsKey(key)){
