@@ -1,6 +1,8 @@
 package model;
 
-public class Despesa {
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
+
+public class Despesa implements Comparable<Despesa> {
 	private String codigo;
 	private String nome;
 	private Double valor;	
@@ -35,6 +37,29 @@ public class Despesa {
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
+
+	@Override
+	public int compareTo(Despesa arg0) {
+		
+		return this.codigo.compareTo(arg0.getCodigo());
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.getNome()+" : "+this.getValor();
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		
+		if(!(o instanceof Despesa)) return false;
+		
+	    Despesa other = (Despesa) o;
+	    
+	    return (this.codigo.trim().compareTo( other.codigo.trim()) == 0 );
+	}
+	
 	
 	
 }

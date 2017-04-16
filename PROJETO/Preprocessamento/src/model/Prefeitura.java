@@ -2,8 +2,9 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
-public class Prefeitura {
+public class Prefeitura implements Comparable<Prefeitura>  {
 	private int codigo;
 	private String nome;
 	private String uf;
@@ -50,11 +51,27 @@ public class Prefeitura {
 	public void setDespesas(List<Despesa> despesas) {
 		this.despesas = despesas;
 	}
+	public void setDespesas(TreeSet<Despesa> treeSetDespesas) {
+		despesas = new ArrayList<Despesa>(treeSetDespesas);
+	}
 	public List<Score> getScores() {
 		return scores;
 	}
 	public void setScores(List<Score> scores) {
 		this.scores = scores;
+	}
+	@Override
+	public int compareTo(Prefeitura o) {
+		if(this.codigo == o.getCodigo())
+			return 0;
+		else		
+			return this.codigo > o.getCodigo() ? 1: -1;
+	}
+	
+	@Override
+	public String toString() {
+		
+		return this.nome+";"+this.uf+";"+this.codigo+";"+this.populacao+";"+this.despesas;
 	}
 	
 }

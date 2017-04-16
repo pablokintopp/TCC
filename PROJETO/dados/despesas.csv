@@ -1,4 +1,4 @@
-00 -  Despesas (Exceto Intraorçamentárias)
+00 - Despesas (Exceto Intraorçamentárias)
 01 - Legislativa
 01.031 - Ação Legislativa
 01.032 - Controle Externo
@@ -84,6 +84,7 @@
 14.423 - Assistência aos Povos Indígenas
 14.999 - Demais Subfunções Direitos da Cidadania
 15 - Urbanismo
+15.451 - Infra-Estrutura Urbana
 15.451 - Infraestrutura Urbana
 15.452 - Serviços Urbanos
 15.453 - Transportes Coletivos Urbanos
@@ -109,6 +110,10 @@
 19.573 - Difusão do Conhecimento Científico e Tecnológico
 19.999 - Demais Subfunções Ciência e Tecnologia
 20 - Agricultura
+20.601 - Promoção da Produção Vegetal
+20.602 - Promoção da Produção Animal
+20.603 - Defesa Sanitária Vegetal
+20.604 - Defesa Sanitária Animal
 20.605 - Abastecimento
 20.606 - Extensão Rural
 20.607 - Irrigação
@@ -141,10 +146,12 @@
 25.751 - Conservação de Energia
 25.752 - Energia Elétrica
 25.753 - Combustíveis Minerais
+25.753 - Petróleo
 25.754 - Biocombustíveis
 25.999 - Demais Subfunções Energia
 26 - Transporte
 26.781 - Transporte Aéreo
+26.781 - Transporte Áreo
 26.782 - Transporte Rodoviário
 26.783 - Transporte Ferroviário
 26.784 - Transporte Hidroviário
@@ -161,6 +168,7 @@
 28.843 - Serviço da Dívida Interna
 28.844 - Serviço da Dívida Externa
 28.845 - Outras Transferências
+28.845 - Transferências
 28.846 - Outros Encargos Especiais
 28.847 - Transferências para a Educação Básica
 28.999 - Demais Subfunções Encargos Especiais

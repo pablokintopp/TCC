@@ -1,4 +1,6 @@
-java Preprocessamento --debug < 2005_original.csv > teste.csv type teste2.csv 
+copy ..\Preprocessamento\bin\Main.class Main.class
+	
+java Main  > output.csv
 		
 pause		
 	
