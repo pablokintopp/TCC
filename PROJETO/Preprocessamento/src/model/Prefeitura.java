@@ -74,4 +74,14 @@ public class Prefeitura implements Comparable<Prefeitura>  {
 		return this.nome+";"+this.uf+";"+this.codigo+";"+this.populacao+";"+this.despesas;
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		
+		if(!(o instanceof Prefeitura)) return false;
+		
+		Prefeitura other = (Prefeitura) o;
+	    
+	    return (this.codigo == other.codigo);
+	}
+	
 }

@@ -1,12 +1,9 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.TreeSet;
-
+import model.Ano;
 import model.Despesa;
 import model.Prefeitura;
 
@@ -20,7 +17,7 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException {
 		TreeSet<Despesa> despesas = new TreeSet<Despesa>();
-		//TreeSet<Prefeitura> prefeituras = new TreeSet<Prefeitura>();
+		ArrayList<Ano> anos = new ArrayList<>();
 		
 		FileReader in = new FileReader(URL_DESPESAS);
 		BufferedReader buffer = new BufferedReader(in);
@@ -38,6 +35,14 @@ public class Main {
 			despesas.add(aux);
 			
 		}
+		String output1 = "";
+		for(Despesa d : despesas){
+			if(d.getCodigo().contains(".") == false && d.getCodigo().equals("00") == false){
+				output1+=";"+d.getValor();		
+			}
+		}
+		System.out.println(output1);
+		
 		//lendo instancias 2013 a 2015
 		for(int ano = 2013 ; ano <= 2015 ; ano++){
 			in = new FileReader(URL_INSTANCIAS.replace("YYYY", String.valueOf(ano)));
@@ -51,43 +56,106 @@ public class Main {
 					line = line.replace("\"", "");
 					String cols[] = line.split(";");
 					String name = cols[0].split(" - ")[0].toUpperCase().replaceAll("PREFEITURA MUNICIPAL DE ", "");
-					String codigo = cols[1].trim().substring(0, 5);
+					String codigo = cols[1].trim().substring(0,6);
 					String UF = cols[2].trim();
 					String population = cols[3].trim();
-					String despAux [] =  cols[4].toLowerCase().contains("intra") ? new String[]{cols[4]} : cols[4].split("-");
+					String despesa = "";
+					//caso nao seja despesa exceto intra ou despesa intraorcamentaria
+					if(cols[4].toUpperCase().contains("INTRA")){
+						if(cols[4].toUpperCase().contains("EXCETO")){
+							despesa = "00";
+						}else{
+							despesa = "29";							
+						}
+						
+					}else{
+						String despAux [] =  cols[4].split("-");
+						despesa = despAux[0].trim();
+					}
 					
-					String despesa = despAux.length > 1 ? despAux[0].trim() : despAux[0].toLowerCase().contains("exceto") ? "00": "29";
 					String despValor = cols[5].trim().replace(",", ".");
 					Prefeitura aux = new Prefeitura(Integer.valueOf(codigo), name, UF, Integer.valueOf(population));
 					int indexPrefeitura = prefeituras.indexOf(aux);
-					if(indexPrefeitura < 0){				
-						aux.setDespesas(despesas);
+					if(indexPrefeitura < 0){
+						TreeSet<Despesa> auxDespesas = new TreeSet<>();
+						for(Despesa d : despesas){
+							Despesa auxD = d;
+							auxDespesas.add(auxD);
+						}
+						aux.setDespesas(auxDespesas);
 						prefeituras.add(aux);		
 						indexPrefeitura = prefeituras.indexOf(aux);						
 						
 					}
 					Despesa auxDesp = new Despesa(despesa, " ", 0.0);					
 					int indexDespesa = prefeituras.get(indexPrefeitura).getDespesas().indexOf(auxDesp);
-					if(indexDespesa > 0){
+					if(indexDespesa > -1){
 						prefeituras.get(indexPrefeitura).getDespesas().get(indexDespesa).setValor(Double.valueOf(despValor));
 						
 					}else{
-						System.out.println("###Index not found despesa: "+despesa);
+						System.out.println("###Index not found despesa: "+despesa+" LIne: "+lineNumber);
 						
 					}
 					
 				}
+				//System.out.println(despesas.toString()); // NEVER EVER TRY IT HERE
 				lineNumber++;
 				
 			}
-			for(Prefeitura p : prefeituras)
-				System.out.println(p.toString());
+			
+			Ano auxYear = new Ano(ano);			
+			auxYear.setPrefeituras(new ArrayList<Prefeitura>(prefeituras));			
+			anos.add(auxYear);
+			
+//			for(Prefeitura p : auxYear.getPrefeituras()){
+//				String output ="";
+//				output+= ano;
+//				output+=";"+p.getCodigo();
+//				output+=";"+p.getPopulacao();
+//				for(Despesa d : p.getDespesas()){
+//					if(d.getCodigo().contains(".") == false && d.getCodigo().equals("00") == false){
+//						output+=";"+d.getValor();		
+//					}
+//				}
+//				System.out.println(output);
+//			}
 			
 		}
-//		for(Despesa d : despesas){
-//			System.out.println(d.getCodigo()+"-"+d.getNome());
-//			
+		//header
+		
+//		String output ="#";
+//		output+="Ano";
+//		output+=";Cidade";
+//		output+=";População";
+//		for(Despesa d : anos.get(0).getPrefeituras().get(0).getDespesas()){
+//			if(d.getCodigo().contains(".") == false && d.getCodigo().equals("00") == false){
+//				output+=";"+d.getNome();		
+//			}
 //		}
+//		System.out.println(output);
+//		
+//		for(Ano a : anos){
+//			for(Prefeitura p : a.getPrefeituras()){
+//				output ="";
+//				output+=a.getValor();
+//				output+=";"+p.getCodigo();
+//				output+=";"+p.getPopulacao();
+//				for(Despesa d : p.getDespesas()){
+//					if(d.getCodigo().contains(".") == false && d.getCodigo().equals("00") == false){
+//						output+=";"+d.getValor();		
+//					}				
+//				}
+//				System.out.println(output);
+//			}
+//		}
+		String output = "";
+		for(Despesa d : despesas){
+			if(d.getCodigo().contains(".") == false && d.getCodigo().equals("00") == false){
+				output+=";"+d.getValor();		
+			}
+		}
+		System.out.println(output);
+
 
 	}
 

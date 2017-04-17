@@ -47,7 +47,7 @@ public class Despesa implements Comparable<Despesa> {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return this.getNome()+" : "+this.getValor();
+		return this.getCodigo()+"-"+this.getNome()+" : "+this.getValor();
 	}
 	
 	@Override

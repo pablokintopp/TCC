@@ -32,6 +32,17 @@ public class Ano {
 	}
 	public void setPrefeituras(List<Prefeitura> prefeituras) {
 		this.prefeituras = prefeituras;
+		this.totalPrefeituras = this.prefeituras.size();
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		
+		if(!(o instanceof Ano)) return false;
+		
+		Ano other = (Ano) o;
+	    
+	    return (this.valor == other.valor);
 	}
 
 	
