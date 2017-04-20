@@ -1,0 +1,23 @@
+#Saved ELKI settings. First line is title, remaining lines are parameters.
+LOF_k70
+de.lmu.ifi.dbs.elki.application.KDDCLIApplication
+-verbose
+-verbose
+-dbc
+FileBasedDatabaseConnection
+-dbc.in
+D:\REPOSITORY\TCC\PROJETO\dados\2013_2014_2015_min.csv
+-parser.labelIndices
+0
+-time
+-algorithm
+outlier.lof.LOF
+-lof.k
+70
+-evaluator
+NoAutomaticEvaluation
+-resulthandler
+ResultWriter
+-out
+D:\REPOSITORY\TCC\PROJETO\dados\LOF_RESULTS
+

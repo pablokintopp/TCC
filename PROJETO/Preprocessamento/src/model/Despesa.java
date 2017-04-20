@@ -5,13 +5,17 @@ import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 public class Despesa implements Comparable<Despesa> {
 	private String codigo;
 	private String nome;
-	private Double valor;	
+	private double valor;	
+	private double valorSuavizado;
+	private double valorNormalizado;
 	
 	
-	public Despesa(String codigo, String nome, Double valor) {		
+	public Despesa(String codigo, String nome, double valor) {		
 		this.codigo = codigo;
 		this.nome = nome;
-		this.valor = valor;
+		this.valor = valor;		
+		this.valorSuavizado = 0;
+		this.valorNormalizado = 0;
 	}
 
 	public String getCodigo() {
@@ -30,12 +34,29 @@ public class Despesa implements Comparable<Despesa> {
 		this.nome = nome;
 	}
 	
-	public Double getValor() {
+	public double getValor() {
 		return valor;
 	}
 	
-	public void setValor(Double valor) {
-		this.valor = valor;
+	public void setValor(double float1) {
+		this.valor = float1;
+	}
+	
+
+	public double getValorSuavizado() {
+		return valorSuavizado;
+	}
+
+	public void setValorSuavizado(double valorSuavizado) {
+		this.valorSuavizado = valorSuavizado;
+	}
+
+	public double getValorNormalizado() {
+		return valorNormalizado;
+	}
+
+	public void setValorNormalizado(double valorNormalizado) {
+		this.valorNormalizado = valorNormalizado;
 	}
 
 	@Override

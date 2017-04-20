@@ -9,6 +9,8 @@ public class Prefeitura implements Comparable<Prefeitura>  {
 	private String nome;
 	private String uf;
 	private int populacao;	
+	private int populacaoSuavizada;
+	private int populacaoNormalizada;	
 	private List<Despesa> despesas;
 	private List<Score> scores;	
 	
@@ -19,7 +21,9 @@ public class Prefeitura implements Comparable<Prefeitura>  {
 		this.uf = uf;
 		this.populacao = populacao;		
 		despesas = new ArrayList<Despesa>();
-		scores = new ArrayList<Score>();
+		scores = new ArrayList<Score>();	
+		this.populacaoNormalizada = 0;
+		this.populacaoSuavizada = 0;
 	}
 	public int getCodigo() {
 		return codigo;
@@ -60,6 +64,21 @@ public class Prefeitura implements Comparable<Prefeitura>  {
 	public void setScores(List<Score> scores) {
 		this.scores = scores;
 	}
+	
+	
+	public int getPopulacaoSuavizada() {
+		return populacaoSuavizada;
+	}
+	public void setPopulacaoSuavizada(int populacaoSuavizada) {
+		this.populacaoSuavizada = populacaoSuavizada;
+	}
+	public int getPopulacaoNormalizada() {
+		return populacaoNormalizada;
+	}
+	public void setPopulacaoNormalizada(int populacaoNormalizada) {
+		this.populacaoNormalizada = populacaoNormalizada;
+	}
+	
 	@Override
 	public int compareTo(Prefeitura o) {
 		if(this.codigo == o.getCodigo())
