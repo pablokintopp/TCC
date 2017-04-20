@@ -192,7 +192,7 @@ public class Main {
 				
 			//printYear(anos.get(1),minCategories,header,df);
 		 
-		 printYeasInLine(anos, minCategories, header, df,false);
+		 printYeasInLine(anos, minCategories, header, df,false,false);
 		
 
 
@@ -250,8 +250,7 @@ public class Main {
 		//REMOVER PREFEITURAS QUE NAO SE REPETEM TODOS ANOS
 		TreeSet<Prefeitura> removeList = new TreeSet<>();
 		for(Ano a : anos){
-			 for(Prefeitura p : a.getPrefeituras()){
-				
+			 for(Prefeitura p : a.getPrefeituras()){				
 				 for(Ano a2 : anos){
 					 if(!a2.equals(a)){
 						 if(a2.getPrefeituras().indexOf(p)< 0 ){
