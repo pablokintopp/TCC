@@ -124,13 +124,14 @@ public class Ano {
 				p.setPopulacaoSuavizada((int)Math.log10(p.getPopulacao()));
 				mediaPopulacao+= p.getPopulacaoSuavizada();				
 				
+				//NOSSA FORMULA DEFINIDA DE NORMALIZACAO, VALOR ENTRE 1 E -1 ENTAO ZERAR, SENAO SUAVIZAR NORMALMENTE (MANTENDO NEGATIVO CASO  SEJA)
 				for(int i = 0; i < p.getDespesas().size() ; i++){
-					if(p.getDespesas().get(i).getValor() > 0 )
+					if(p.getDespesas().get(i).getValor() > 1 )
 							p.getDespesas().get(i).setValorSuavizado(Math.log10(p.getDespesas().get(i).getValor()));
-					else if(p.getDespesas().get(i).getValor() < 0 )
+					else if(p.getDespesas().get(i).getValor() < 1 )
 							p.getDespesas().get(i).setValorSuavizado(-(Math.log10(-(p.getDespesas().get(i).getValor()))));
 						 else	
-							 p.getDespesas().get(i).setValorSuavizado(p.getDespesas().get(i).getValor());
+							 p.getDespesas().get(i).setValorSuavizado(0);
 					
 					despesasHelper.get(i).setMedia(despesasHelper.get(i).getMedia()+ p.getDespesas().get(i).getValorSuavizado());
 									
