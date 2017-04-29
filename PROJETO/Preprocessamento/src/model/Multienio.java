@@ -15,7 +15,6 @@ public class Multienio {
 	private boolean ajusted;
 	
 	
-	
 	public Multienio() {
 		this.nome = "";
 		this.anos = new ArrayList<Ano>();
@@ -127,7 +126,7 @@ public class Multienio {
 					for(Despesa d : instancia.getDespesas())
 						if(!d.getCodigo().equals("00"))
 							if((minCategory && !d.getCodigo().contains(".")) || (!minCategory && d.getCodigo().contains("."))||(d.getCodigo().equals("29") ) )
-								output +=absoluteValues ?  ";"+df.format( d.getValor()) : ";"+df.format( d.getValorNormalizado());				
+								output += (absoluteValues ?  ";"+df.format( d.getValor()) : ";" + df.format( d.getValorSuavizadoNormalizado()));				
 				}	else{
 					System.out.println("#INDEX_NOT_FOUND prefeitura codigo:"+p.getCodigo()+" para ano: "+a.getValor());
 					

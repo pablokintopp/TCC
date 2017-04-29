@@ -21,3 +21,24 @@ ResultWriter
 -out
 D:\REPOSITORY\TCC\PROJETO\dados\LOF_RESULTS
 
+LOF_2014
+de.lmu.ifi.dbs.elki.application.KDDCLIApplication
+-verbose
+-verbose
+-dbc.in
+D:\REPOSITORY\TCC\PROJETO\dados\OUTPUT\2014_ABS.csv
+-parser.labelIndices
+0
+-time
+-algorithm
+outlier.lof.LOF
+-lof.k
+70
+-evaluator
+NoAutomaticEvaluation
+-resulthandler
+ResultWriter
+-out
+D:\REPOSITORY\TCC\PROJETO\dados\OUTPUT_ELKI
+-out.silentoverwrite
+

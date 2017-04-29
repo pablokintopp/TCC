@@ -7,15 +7,18 @@ public class Despesa implements Comparable<Despesa> {
 	private String nome;
 	private double valor;	
 	private double valorSuavizado;
-	private double valorNormalizado;
-	
+	private double valorSuavizadoNormalizado;
+	private double valorRelativo;
+	private double valorRelativoNormalizado;
 	
 	public Despesa(String codigo, String nome, double valor) {		
 		this.codigo = codigo;
 		this.nome = nome;
 		this.valor = valor;		
 		this.valorSuavizado = 0;
-		this.valorNormalizado = 0;
+		this.valorSuavizadoNormalizado = 0;
+		this.valorRelativo = 0;
+		this.valorRelativoNormalizado = 0;
 	}
 
 	public String getCodigo() {
@@ -49,14 +52,30 @@ public class Despesa implements Comparable<Despesa> {
 
 	public void setValorSuavizado(double valorSuavizado) {
 		this.valorSuavizado = valorSuavizado;
+	}	
+
+	public double getValorSuavizadoNormalizado() {
+		return valorSuavizadoNormalizado;
 	}
 
-	public double getValorNormalizado() {
-		return valorNormalizado;
+	public void setValorSuavizadoNormalizado(double valorSuavizadoNormalizado) {
+		this.valorSuavizadoNormalizado = valorSuavizadoNormalizado;
 	}
 
-	public void setValorNormalizado(double valorNormalizado) {
-		this.valorNormalizado = valorNormalizado;
+	public double getValorRelativo() {
+		return valorRelativo;
+	}
+
+	public void setValorRelativo(double valorRelativo) {
+		this.valorRelativo = valorRelativo;
+	}
+
+	public double getValorRelativoNormalizado() {
+		return valorRelativoNormalizado;
+	}
+
+	public void setValorRelativoNormalizado(double valorRelativoNormalizado) {
+		this.valorRelativoNormalizado = valorRelativoNormalizado;
 	}
 
 	@Override

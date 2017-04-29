@@ -6,7 +6,7 @@
 # -dbc FileBasedDatabaseConnection
 # 
 # de.lmu.ifi.dbs.elki.datasource.FileBasedDatabaseConnection
-# -dbc.in D:\REPOSITORY\TCC\PROJETO\dados\2013_2014_min.csv
+# -dbc.in D:\REPOSITORY\TCC\PROJETO\dados\OUTPUT\2014_SUA_NOR.csv
 # -dbc.parser NumberVectorLabelParser
 # 
 # de.lmu.ifi.dbs.elki.datasource.parser.CSVReaderFormat
@@ -26,21 +26,11 @@
 # 
 # de.lmu.ifi.dbs.elki.workflow.AlgorithmStep
 # -time true
-# -algorithm outlier.clustering.KMeansOutlierDetection
+# -algorithm outlier.lof.LOF
 # 
-# de.lmu.ifi.dbs.elki.algorithm.outlier.clustering.KMeansOutlierDetection
-# -kmeans.algorithm KMeansLloyd
-# 
-# de.lmu.ifi.dbs.elki.algorithm.clustering.kmeans.KMeansLloyd
-# -kmeans.k 70
-# -kmeans.initialization RandomlyChosenInitialMeans
-# 
-# de.lmu.ifi.dbs.elki.algorithm.clustering.kmeans.initialization.RandomlyChosenInitialMeans
-# -kmeans.seed null
-# 
-# de.lmu.ifi.dbs.elki.algorithm.clustering.kmeans.KMeansLloyd
-# -algorithm.distancefunction minkowski.SquaredEuclideanDistanceFunction
-# -kmeans.maxiter 0
+# de.lmu.ifi.dbs.elki.algorithm.outlier.lof.LOF
+# -algorithm.distancefunction minkowski.EuclideanDistanceFunction
+# -lof.k 70
 # 
 # de.lmu.ifi.dbs.elki.workflow.EvaluationStep
 # -evaluator NoAutomaticEvaluation

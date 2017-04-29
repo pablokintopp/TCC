@@ -10,6 +10,7 @@ import java.util.TreeSet;
 import model.Ano;
 import model.Despesa;
 import model.Prefeitura;
+import model.Score;
 
 public class InputReader {
 	private FileReader in ;
@@ -94,6 +95,39 @@ public class InputReader {
 		auxYear.setPrefeituras(new ArrayList<Prefeitura>(prefeituras));			
 		anos.add(auxYear);	
 		
+	}
+	
+	
+	//leitura de scores para O Ano ano, no path url e com 1 ou mais totalScores
+	public void readScores(Ano ano,String url, String detalhe) throws IOException{
+		in = new FileReader(url);
+		buffer = new BufferedReader(in);
+		while((line=buffer.readLine())!=null){
+			//boolean isComment = line.trim().charAt(0)== '#';
+			String cols[] = line.split(" ");
+			int i =  cols.length -1;			
+			ArrayList<Score> scores = new ArrayList<>();
+			do{
+				String algoritmo =  cols[i].split("-outlier")[0];				
+				double valor = Double.valueOf(cols[i].split("=")[1]);
+				Score score = new Score(algoritmo, valor,detalhe);
+				scores.add(score);
+				i--;				
+			}while(cols[i].contains("outlier"));
+				int codigo = Integer.valueOf(cols[i]);
+				int indexPrefeitura = ano.getPrefeituras().indexOf(new Prefeitura(codigo, " ", " ", 1234));
+				if(indexPrefeitura >= 0 ){
+					ano.getPrefeituras().get(indexPrefeitura).getScores().addAll(scores);
+					int len = ano.getPrefeituras().get(indexPrefeitura).getScores().size();
+					//System.out.println(ano.getPrefeituras().get(indexPrefeitura).getNome()+";"+ano.getPrefeituras().get(indexPrefeitura).getScores().toString());
+				}else{
+					System.out.println("Index nao encontrado para "+cols.toString());
+					
+				}	
+			
+			
+			
+		}
 	}
 	
 

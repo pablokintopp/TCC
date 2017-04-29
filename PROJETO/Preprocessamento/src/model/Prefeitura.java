@@ -9,8 +9,8 @@ public class Prefeitura implements Comparable<Prefeitura>  {
 	private String nome;
 	private String uf;
 	private int populacao;	
-	private int populacaoSuavizada;
-	private int populacaoNormalizada;	
+	private double populacaoSuavizada;
+	private double populacaoNormalizada;	
 	private List<Despesa> despesas;
 	private List<Score> scores;	
 	
@@ -66,16 +66,16 @@ public class Prefeitura implements Comparable<Prefeitura>  {
 	}
 	
 	
-	public int getPopulacaoSuavizada() {
+	public double getPopulacaoSuavizada() {
 		return populacaoSuavizada;
 	}
-	public void setPopulacaoSuavizada(int populacaoSuavizada) {
+	public void setPopulacaoSuavizada(double populacaoSuavizada) {
 		this.populacaoSuavizada = populacaoSuavizada;
 	}
-	public int getPopulacaoNormalizada() {
+	public double getPopulacaoNormalizada() {
 		return populacaoNormalizada;
 	}
-	public void setPopulacaoNormalizada(int populacaoNormalizada) {
+	public void setPopulacaoNormalizada(double populacaoNormalizada) {
 		this.populacaoNormalizada = populacaoNormalizada;
 	}
 	
