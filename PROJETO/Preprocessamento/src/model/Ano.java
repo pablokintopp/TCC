@@ -63,15 +63,18 @@ public class Ano {
 	}
 
 	//IMPRIME SOMENTE TODAS INSTANCIAS DE UM ANO (value é entre valor absoluto, relativo , suavizado e normalizado) (a) COM CATEGORIAS GENERICAS OU ESPECIFICAS (minCategory) e COM OU SEM CABEÇALHO
-		public void print(int value,boolean printTotalExpense,boolean useCode,boolean minCategory, boolean header, DecimalFormat df, boolean printScores,String outputFile) throws IOException {
+		public void print(int value,boolean printTotalExpense,boolean useCode,boolean printName,boolean minCategory, boolean header, DecimalFormat df, boolean printScores,String outputFile) throws IOException {
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile.contains(".csv")? outputFile:outputFile+".csv"), "utf-8"));
 			String output ="";		
 			if (header){
 				output+="#";
 				//output+="Ano";
-				output+="Codigo";
-				if(!useCode)
-					output+=";Cidade";
+				if(useCode){
+					output+="Codigo";
+				}
+				if(printName)
+					output+= useCode ? ";Cidade" : "Cidade";
+				
 				if(value != VALOR_RELATIVO && value != VALOR_RELATIVO_NORMALIZADO)
 					output+=";População";
 				
@@ -104,10 +107,11 @@ public class Ano {
 			
 			for(Prefeitura p : this.getPrefeituras()){
 				output ="";
-				output+=p.getCodigo();
+				if(useCode)
+					output+=p.getCodigo();
 				
-				if(!useCode)
-					output+=";"+ p.getNome()+" - "+p.getUf();
+				if(printName)
+					output+= useCode ? ";"+ p.getNome()+" - "+p.getUf() : p.getNome()+" - "+p.getUf() ;
 				if(value != VALOR_RELATIVO && value != VALOR_RELATIVO_NORMALIZADO){
 					output+=";"+ (value == VALOR_SUAVIZADO_NORMALIZADO ?  p.getPopulacaoNormalizada():
 						value == VALOR_SUAVIZADO ? p.getPopulacaoSuavizada() :

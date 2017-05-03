@@ -19,7 +19,7 @@ public class LatexTableGenerator {
 				String columns = "{";
 				
 				for(int i = 0; i < cols.length; i++){
-					columns += i > 0 ? "|c" : "c";
+					columns += i > 0 ? "|l" : "l";
 					output+= i > 0 ? "\t & { \\scriptsize \\textbf{ "+cols[i].trim()+"}}" : "{ \\scriptsize \\textbf{ "+cols[i].trim()+"}}";
 				}
 					

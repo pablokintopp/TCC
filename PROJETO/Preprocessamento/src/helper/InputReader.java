@@ -114,6 +114,7 @@ public class InputReader {
 				scores.add(score);
 				i--;				
 			}while(cols[i].contains("outlier"));
+			
 				int codigo = Integer.valueOf(cols[i]);
 				int indexPrefeitura = ano.getPrefeituras().indexOf(new Prefeitura(codigo, " ", " ", 1234));
 				if(indexPrefeitura >= 0 ){
@@ -121,7 +122,7 @@ public class InputReader {
 					int len = ano.getPrefeituras().get(indexPrefeitura).getScores().size();
 					//System.out.println(ano.getPrefeituras().get(indexPrefeitura).getNome()+";"+ano.getPrefeituras().get(indexPrefeitura).getScores().toString());
 				}else{
-					System.out.println("Index nao encontrado para "+cols.toString());
+					System.out.println("Index nao encontrado para "+cols[i].toString()+" ano: "+ano.getValor());
 					
 				}	
 			
