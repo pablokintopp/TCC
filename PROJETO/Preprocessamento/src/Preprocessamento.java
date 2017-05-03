@@ -185,14 +185,17 @@ public class Preprocessamento {
 		
 		int colsInit = Integer.valueOf(args[2].split("-")[0]); // COL INICIAS DAS CATEGORIAS
 		int colsEnd = Integer.valueOf(args[2].split("-")[1]); //COL FINAL DAS CATEGORIAS
+		//int scoresIni = Integer.valueOf(args[3].split("-")[0]);
+		//int scoresEnd = Integer.valueOf(args[3].split("-")[1]);
 		ArrayList<String> arrayOut = new ArrayList<>(); // ARRAY PARA SAIDA DOS DADOS
-		TreeMap<String, ArrayList<String>> arrayAux = new TreeMap<>(Collections.reverseOrder()); // ARVORE PARA AUXILIAR EM MANTER DADOS ORDENADOS POR PORCENTAGEM
+		TreeMap<String, String> arrayAux = new TreeMap<>(Collections.reverseOrder()); // ARVORE PARA AUXILIAR EM MANTER DADOS ORDENADOS POR PORCENTAGEM
 		ArrayList<String> header = new ArrayList<>(); // CABEÇALHO ORIGINAL PARA AUXILIAR NO PROCESSO
 		String line ="";
-		
+		int countLine = 1;
 		while((line=in.readLine())!=null) {
 			String[] cols = line.split(";");
-			if(cols[0].charAt(0) == '#'){
+			if(countLine == 1){
+				countLine++;
 				//gerar headers de acordo
 				arrayOut = new ArrayList<>();			
 				
@@ -205,12 +208,10 @@ public class Preprocessamento {
 					
 				}
 				//GERANDO CABEÇALHOS TOP X
-				for(int i = 1; i <= topSize ; i++){					
-					arrayOut.add("Top "+i+" CATEGORY");
-					arrayOut.add("Top "+i+" %");
-					arrayOut.add("Top "+i+" VALUE");
-					arrayOut.add("Top "+i+" CENTROID");
-					arrayOut.add("Top "+i+" DIFF ");
+				for(int i = 1, j = colsInit; j <= colsEnd ; i++, j++){	
+					String colunm = "Top "+i+" Prefeitura / Vizinhos / Diferenca";
+					arrayOut.add(colunm);
+//					
 				}
 				
 				for(int i = colsEnd+1; i < cols.length ; i++){					
@@ -227,47 +228,34 @@ public class Preprocessamento {
 				
 				for(int i = colsInit; i <= colsEnd ; i++){
 					String colResult[] = cols[i].split("/");
+					String diff = String.valueOf( df.format(new Double(colResult[1]) - new Double(colResult[2])));
+					colResult[1] = colResult[1].trim()+" /";
+					colResult[2] = colResult[2].trim()+" /";
+					diff = diff;
+					String value = "";
 					
+					if(colResult[0].trim().length() == 5)
+						colResult[0]= "0"+colResult[0].trim();
+				
 					
-					colResult[0] = colResult[0].trim();
+					colResult[0] = colResult[0].trim()+" "+header.get(i);
 					
-					if(colResult[0].length() == 5)
-						colResult[0] = "0"+colResult[0];
+					for(String col : colResult)
+						value+=col+" ";
+					value+=diff;
 					
-					ArrayList<String> result = new ArrayList<>();
-					for(String c : colResult)
-						result.add(c.trim());
-					
-					result.add(String.valueOf(df.format(Double.valueOf(colResult[1].trim()) - Double.valueOf(colResult[2].trim()))));
-					
-					//colResult = (String[]) result.toArray();
-					
-					arrayAux.put(colResult[0]+" "+header.get(i), result);
+					arrayAux.put(colResult[0].trim()+" "+header.get(i), value);
 					
 				}
 				
-				int count = topSize;
-				for(Entry<String, ArrayList<String>> entry : arrayAux.entrySet()){
-					String key = entry.getKey().split("%")[1];
-					if( key.contains("-")){						
-						key = key.split("-")[1].trim();
-					}
-					key = key.replace("\"", "");
-					key = key.trim();
-					ArrayList<String> value = entry.getValue();
-					arrayOut.add(key.trim());
-					for(String v : value)
-						arrayOut.add(v.trim());
-					
-					count--;					
-					if(count <= 0)
-						break;
-						
-					
+				
+				for(Entry<String, String> entry : arrayAux.entrySet()){					
+					String value = entry.getValue();					
+					arrayOut.add(value);	
 				}
 				
 				for(int i = colsEnd+1; i < cols.length ; i++){					
-					arrayOut.add(cols[i]);
+					arrayOut.add(cols[i].replace(",", "."));
 				}
 				
 				printArray(arrayOut);
@@ -445,7 +433,7 @@ public class Preprocessamento {
 	private void printArray(ArrayList<String> array ){
 		 String valueLine = array.toString().replace("[", "");
 		  valueLine = valueLine.toString().replace("]", "");
-		    valueLine = valueLine.toString().replace(",", ";");
+		   valueLine = valueLine.toString().replace(",", ";");
 		    System.out.println(valueLine);
 	}
 

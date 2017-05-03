@@ -63,19 +63,23 @@ public class Ano {
 	}
 
 	//IMPRIME SOMENTE TODAS INSTANCIAS DE UM ANO (value é entre valor absoluto, relativo , suavizado e normalizado) (a) COM CATEGORIAS GENERICAS OU ESPECIFICAS (minCategory) e COM OU SEM CABEÇALHO
-		public void print(int value,boolean useCode,boolean minCategory, boolean header, DecimalFormat df, boolean printScores,String outputFile) throws IOException {
+		public void print(int value,boolean printTotalExpense,boolean useCode,boolean minCategory, boolean header, DecimalFormat df, boolean printScores,String outputFile) throws IOException {
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile.contains(".csv")? outputFile:outputFile+".csv"), "utf-8"));
 			String output ="";		
 			if (header){
 				output+="#";
 				//output+="Ano";
-				output+="Cidade";
+				output+="Codigo";
+				if(!useCode)
+					output+=";Cidade";
 				if(value != VALOR_RELATIVO && value != VALOR_RELATIVO_NORMALIZADO)
 					output+=";População";
 				
+				
+				
 				for(Despesa d : this.getPrefeituras().get(0).getDespesas()){
 					if(minCategory){
-						if((d.getCodigo().contains(".") == false && d.getCodigo().equals("00") == false )){					
+						if((d.getCodigo().contains(".") == false && (d.getCodigo().equals("00") == false || (d.getCodigo().equals("00") && printTotalExpense)) )){							
 							output+=";"+d.getNome();		
 						}
 					}else{
@@ -100,8 +104,10 @@ public class Ano {
 			
 			for(Prefeitura p : this.getPrefeituras()){
 				output ="";
-				//output+=a.getValor();
-				output+= useCode ? p.getCodigo(): p.getNome()+" - "+p.getUf();
+				output+=p.getCodigo();
+				
+				if(!useCode)
+					output+=";"+ p.getNome()+" - "+p.getUf();
 				if(value != VALOR_RELATIVO && value != VALOR_RELATIVO_NORMALIZADO){
 					output+=";"+ (value == VALOR_SUAVIZADO_NORMALIZADO ?  p.getPopulacaoNormalizada():
 						value == VALOR_SUAVIZADO ? p.getPopulacaoSuavizada() :
@@ -114,7 +120,7 @@ public class Ano {
 							value == VALOR_RELATIVO_NORMALIZADO ? d.getValorRelativoNormalizado() :
 							d.getValor();//senao absoluto
 					if(minCategory){
-						if((d.getCodigo().contains(".") == false && d.getCodigo().equals("00") == false )){					
+						if((d.getCodigo().contains(".") == false && (d.getCodigo().equals("00") == false || (d.getCodigo().equals("00") && printTotalExpense)) )){					
 							output+=";"+ df.format( valor);		
 						}
 					}else{

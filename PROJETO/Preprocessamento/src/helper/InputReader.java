@@ -43,7 +43,7 @@ public class InputReader {
 			if(lineNumber >= commentLines){
 				line = line.replace("\"", "");
 				String cols[] = line.split(";");
-				String name = cols[0].split(" - ")[0].toUpperCase().replaceAll("PREFEITURA MUNICIPAL DE ", "");
+				String name = cols[0].split(" - ")[0].substring(24);
 				String codigo = cols[1].trim().substring(0,6);
 				String UF = cols[2].trim();
 				String population = cols[3].trim();

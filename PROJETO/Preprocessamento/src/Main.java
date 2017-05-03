@@ -47,21 +47,28 @@ public class Main {
 			reader.readScores(anos.get(0), ELKI_RESULTS+"LOF_2014_SUA_NOR.txt","2014_SUA_NOR");
 		
 		//Medias e desvio padrao para populacoes e despesas
-		//for(Ano a : anos)
-		//	a.calcMeanAndDeviation(despesas);	
-
+//		for(Ano a : anos)
+//			a.calcMeanAndDeviation(despesas);	
+//
+//		boolean useCode = true;
+//		boolean minCategory = true;
+//		boolean hasHeader = true; 
+//      boolean printExpenditureTOtal= false;			
+//		boolean printScores = false;
+//		
+//		anos.get(0).print(Ano.VALOR_ABSOLUTO,printExpenditureTOtal,useCode,minCategory, hasHeader, df, printScores, OUTPUT_PATH + "2014_ABS.csv");	
+//		anos.get(0).print(Ano.VALOR_RELATIVO,printExpenditureTOtal,useCode,minCategory, hasHeader, df, printScores, OUTPUT_PATH + "2014_REL.csv");	
+//		anos.get(0).print(Ano.VALOR_RELATIVO_NORMALIZADO,printExpenditureTOtal,useCode,minCategory, hasHeader, df, printScores, OUTPUT_PATH + "2014_REL_NOR.csv");	
+//		anos.get(0).print(Ano.VALOR_SUAVIZADO,printExpenditureTOtal,useCode,minCategory, hasHeader, df, printScores, OUTPUT_PATH + "2014_SUA.csv");	
+//		anos.get(0).print(Ano.VALOR_SUAVIZADO_NORMALIZADO,printExpenditureTOtal,useCode,minCategory, hasHeader, df, printScores, OUTPUT_PATH + "2014_SUA_NOR.csv");	
+//			
+		
 		boolean useCode = false;
 		boolean minCategory = true;
 		boolean hasHeader = true; 
+		boolean printExpenditureTOtal= true;
 		boolean printScores = true;
-		
-		anos.get(0).print(Ano.VALOR_ABSOLUTO,useCode,minCategory, hasHeader, df, printScores, OUTPUT_PATH + "2014_LOF_ALL.csv");
-		//anos.get(0).print(Ano.VALOR_RELATIVO,useCode,minCategory, hasHeader, df, printScores, OUTPUT_PATH + "2014_REL.csv");	
-		//anos.get(0).print(Ano.VALOR_RELATIVO_NORMALIZADO,useCode,minCategory, hasHeader, df, printScores, OUTPUT_PATH + "2014_REL_NOR.csv");	
-		//anos.get(0).print(Ano.VALOR_SUAVIZADO,useCode,minCategory, hasHeader, df, printScores, OUTPUT_PATH + "2014_SUA.csv");	
-		//anos.get(0).print(Ano.VALOR_SUAVIZADO_NORMALIZADO,useCode,minCategory, hasHeader, df, printScores, OUTPUT_PATH + "2014_SUA_NOR.csv");	
-			
-		
+		anos.get(0).print(Ano.VALOR_ABSOLUTO,printExpenditureTOtal,useCode,minCategory, hasHeader, df, printScores, OUTPUT_PATH + "2014_LOF_ALL.csv");
 
 
 	}
