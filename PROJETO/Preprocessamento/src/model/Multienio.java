@@ -5,20 +5,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class Multienio {
 
 	private String nome;
 	private List<Ano> anos;
-	private List<Score> scores;
+	private TreeMap<Prefeitura,Score> scores;
 	private boolean ajusted;
 	
 	
 	public Multienio() {
 		this.nome = "";
 		this.anos = new ArrayList<Ano>();
-		this.scores = new ArrayList<Score>();
+		this.scores = new TreeMap<Prefeitura, Score>();
 		this.ajusted = false;
 	}
 	public String getNome() {
@@ -47,13 +48,8 @@ public class Multienio {
 		});
 		updateName();
 		
-	}
-	public List<Score> getScores() {
-		return scores;
-	}
-	public void setScores(List<Score> scores) {
-		this.scores = scores;
-	}
+	}	
+	
 	
 	public void updateName(){
 		this.nome = "";
@@ -91,7 +87,7 @@ public class Multienio {
 		
 	}
 	//IMPRIME ESTE MULTIENIO
-	public void print(boolean minCategory, boolean header, DecimalFormat df, boolean absoluteValues, boolean printScores){
+	public void print(boolean minCategory, boolean header, DecimalFormat df, int valueTipe, boolean printScores){
 		if(!ajusted)
 			ajustaPrefeituras();
 		
@@ -110,6 +106,11 @@ public class Multienio {
 				
 			}
 			
+			if(printScores){
+				output += scores.firstEntry().getValue().getAlgoritmo();
+				
+			}
+			
 			System.out.println(output);
 			
 		}	
@@ -122,21 +123,36 @@ public class Multienio {
 				int indexPrefeitura = a.getPrefeituras().indexOf(p);
 				if(indexPrefeitura >= 0){
 					Prefeitura instancia = a.getPrefeituras().get(indexPrefeitura);
-					output += absoluteValues ? ";"+instancia.getPopulacao() :";"+instancia.getPopulacaoNormalizada() ;
+					
+					output += (valueTipe==Ano.VALOR_RELATIVO || valueTipe== Ano.VALOR_RELATIVO_NORMALIZADO || valueTipe == Ano.VALOR_ABSOLUTO ) ?
+							";"+instancia.getPopulacao() : valueTipe == Ano.VALOR_SUAVIZADO ?  ";"+instancia.getPopulacaoSuavizada(): ";"+instancia.getPopulacaoNormalizada();
 					for(Despesa d : instancia.getDespesas())
 						if(!d.getCodigo().equals("00"))
-							if((minCategory && !d.getCodigo().contains(".")) || (!minCategory && d.getCodigo().contains("."))||(d.getCodigo().equals("29") ) )
-								output += (absoluteValues ?  ";"+df.format( d.getValor()) : ";" + df.format( d.getValorSuavizadoNormalizado()));				
+							if((minCategory && !d.getCodigo().contains(".")) || (!minCategory && d.getCodigo().contains("."))||(d.getCodigo().equals("29") ) ){
+								double valor = valueTipe==Ano.VALOR_RELATIVO_NORMALIZADO ? d.getValorRelativoNormalizado() : d.getValorSuavizadoNormalizado();
+								output += (df.format(valor));
+							}
 				}	else{
 					System.out.println("#INDEX_NOT_FOUND prefeitura codigo:"+p.getCodigo()+" para ano: "+a.getValor());
 					
 				}
+			}
+			if(printScores){
+				output += df.format(scores.get(p).getValor());				
 			}
 			System.out.println(output);
 		}
 		
 		
 	}
+	public TreeMap<Prefeitura, Score> getScores() {
+		return scores;
+	}
+	public void setScores(TreeMap<Prefeitura, Score> scores) {
+		this.scores = scores;
+	}
+	
+	
 	
 	
 }
