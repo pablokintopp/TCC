@@ -1,5 +1,11 @@
 package model;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,18 +93,27 @@ public class Multienio {
 		
 	}
 	//IMPRIME ESTE MULTIENIO
-	public void print(boolean minCategory, boolean header, DecimalFormat df, int valueTipe, boolean printScores){
+	public void print(boolean minCategory, boolean header,boolean printName, DecimalFormat df, int valueTipe, boolean printScores,String outputFile) throws IOException{
 		if(!ajusted)
 			ajustaPrefeituras();
 		
-		System.out.println("#Total instancias: "+anos.get(0).getPrefeituras().size());
-		String output ="";
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile.contains(".csv")? outputFile:outputFile+".csv"), "utf-8"));
+		 
+				
+		System.out.println( "#Total instancias: "+anos.get(0).getPrefeituras().size());
+		String output = "";
 		if(header){
 			output ="#";
 			output +="Codigo";
-			
+			if(printName){			
+				output +=";Cidade ";				
+			}
+			boolean showedPopulation = false;
 			for(Ano a : anos){
-				output +=";População "+a.getValor();
+				if(showedPopulation==false && (valueTipe !=Ano.VALOR_RELATIVO && valueTipe != Ano.VALOR_RELATIVO_NORMALIZADO)){
+					output +=";População "+a.getValor();
+					showedPopulation =true;
+				}
 				for(Despesa d : a.getPrefeituras().get(0).getDespesas())
 					if(!d.getCodigo().equals("00"))
 						if((minCategory && !d.getCodigo().contains(".")) || (!minCategory && d.getCodigo().contains("."))||(d.getCodigo().equals("29") ) )
@@ -107,30 +122,38 @@ public class Multienio {
 			}
 			
 			if(printScores){
-				output += scores.firstEntry().getValue().getAlgoritmo();
+				for(Score s : this.getAnos().get(0).getPrefeituras().get(0).getScores()){
+					output+=";"+s.getAlgoritmo().toUpperCase()+"_"+s.getDetalhe();
+					
+				}
 				
 			}
 			
-			System.out.println(output);
+			writer.write(output);
+			writer.newLine();
 			
 		}	
 		
 		for(Prefeitura p : anos.get(0).getPrefeituras()){
 			output ="";
 			output +=p.getCodigo();
-			
+			if(printName){			
+				output +=";"+p.getNome();				
+			}
+			boolean showedPopulation = false;
 			for(Ano a : anos){
 				int indexPrefeitura = a.getPrefeituras().indexOf(p);
 				if(indexPrefeitura >= 0){
 					Prefeitura instancia = a.getPrefeituras().get(indexPrefeitura);
-					
-					output += (valueTipe==Ano.VALOR_RELATIVO || valueTipe== Ano.VALOR_RELATIVO_NORMALIZADO || valueTipe == Ano.VALOR_ABSOLUTO ) ?
-							";"+instancia.getPopulacao() : valueTipe == Ano.VALOR_SUAVIZADO ?  ";"+instancia.getPopulacaoSuavizada(): ";"+instancia.getPopulacaoNormalizada();
+					if(showedPopulation==false && (valueTipe !=Ano.VALOR_RELATIVO && valueTipe != Ano.VALOR_RELATIVO_NORMALIZADO)){
+						output += valueTipe == Ano.VALOR_SUAVIZADO ?  ";"+instancia.getPopulacaoSuavizada(): ";"+instancia.getPopulacaoNormalizada();
+							showedPopulation =true;
+					}
 					for(Despesa d : instancia.getDespesas())
 						if(!d.getCodigo().equals("00"))
 							if((minCategory && !d.getCodigo().contains(".")) || (!minCategory && d.getCodigo().contains("."))||(d.getCodigo().equals("29") ) ){
 								double valor = valueTipe==Ano.VALOR_RELATIVO_NORMALIZADO ? d.getValorRelativoNormalizado() : d.getValorSuavizadoNormalizado();
-								output += (df.format(valor));
+								output += ";"+(df.format(valor));
 							}
 				}	else{
 					System.out.println("#INDEX_NOT_FOUND prefeitura codigo:"+p.getCodigo()+" para ano: "+a.getValor());
@@ -138,9 +161,13 @@ public class Multienio {
 				}
 			}
 			if(printScores){
-				output += df.format(scores.get(p).getValor());				
+				for(Score s : p.getScores()){
+					output+=";"+df.format(s.getValor());
+					
+				}				
 			}
-			System.out.println(output);
+			writer.write(output);
+			writer.newLine();
 		}
 		
 		
