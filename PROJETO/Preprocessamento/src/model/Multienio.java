@@ -138,7 +138,7 @@ public class Multienio {
 			output ="";
 			output +=p.getCodigo();
 			if(printName){			
-				output +=";"+p.getNome();				
+				output +=";"+p.getNome()+" - "+p.getUf();				
 			}
 			boolean showedPopulation = false;
 			for(Ano a : anos){
@@ -146,13 +146,34 @@ public class Multienio {
 				if(indexPrefeitura >= 0){
 					Prefeitura instancia = a.getPrefeituras().get(indexPrefeitura);
 					if(showedPopulation==false && (valueTipe !=Ano.VALOR_RELATIVO && valueTipe != Ano.VALOR_RELATIVO_NORMALIZADO)){
-						output += valueTipe == Ano.VALOR_SUAVIZADO ?  ";"+instancia.getPopulacaoSuavizada(): ";"+instancia.getPopulacaoNormalizada();
+						double valorPop = 0; 
+						if(valueTipe==Ano.VALOR_RELATIVO_NORMALIZADO )
+							valorPop =  instancia.getPopulacao(); 
+						if(valueTipe== Ano.VALOR_SUAVIZADO_NORMALIZADO)	
+							valorPop = instancia.getPopulacaoNormalizada();
+						if(valueTipe==Ano.VALOR_ABSOLUTO )
+							valorPop = instancia.getPopulacao();
+						if(valueTipe== Ano.VALOR_RELATIVO)	
+							valorPop =instancia.getPopulacao();
+						if(valueTipe== Ano.VALOR_SUAVIZADO)	
+							valorPop = instancia.getPopulacaoSuavizada();
+						output += ";"+valorPop;
 							showedPopulation =true;
 					}
 					for(Despesa d : instancia.getDespesas())
 						if(!d.getCodigo().equals("00"))
 							if((minCategory && !d.getCodigo().contains(".")) || (!minCategory && d.getCodigo().contains("."))||(d.getCodigo().equals("29") ) ){
-								double valor = valueTipe==Ano.VALOR_RELATIVO_NORMALIZADO ? d.getValorRelativoNormalizado() : d.getValorSuavizadoNormalizado();
+								double valor = 0; 
+								if(valueTipe==Ano.VALOR_RELATIVO_NORMALIZADO )
+									valor =  d.getValorRelativoNormalizado(); 
+								if(valueTipe== Ano.VALOR_SUAVIZADO_NORMALIZADO)	
+										valor = d.getValorSuavizadoNormalizado();
+								if(valueTipe==Ano.VALOR_ABSOLUTO )
+									valor =  d.getValor(); 
+								if(valueTipe== Ano.VALOR_RELATIVO)	
+										valor = d.getValorRelativo();
+								if(valueTipe== Ano.VALOR_SUAVIZADO)	
+									valor = d.getValorSuavizado();
 								output += ";"+(df.format(valor));
 							}
 				}	else{

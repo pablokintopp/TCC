@@ -111,14 +111,14 @@ public class Main {
 				}
 				
 				multienio.print(true, true,false, df, Ano.VALOR_RELATIVO_NORMALIZADO, false,OUTPUT_PATH +"_REL_NOR.csv");
-				multienio.print(true, true,false, df, Ano.VALOR_RELATIVO_NORMALIZADO, false,OUTPUT_PATH +"_SUA_NOR.csv");
+				multienio.print(true, true,false, df, Ano.VALOR_SUAVIZADO_NORMALIZADO, false,OUTPUT_PATH +"_SUA_NOR.csv");
 				
 			}else{
 				for(Ano a : anos){					
 					multienio.addANo(a);
 				}
-				reader.readScores(multienio.getAnos().get(0), ELKI_RESULTS+"ELKI_"+"_REL_NOR.txt","REL_NOR");			
-				reader.readScores(multienio.getAnos().get(0), ELKI_RESULTS+"ELKI_"+"_SUA_NOR.txt","SUA_NOR");	
+				reader.readScores(multienio.getAnos().get(0), ELKI_RESULTS+"ELKI"+"_REL_NOR.txt","REL_NOR");			
+				reader.readScores(multienio.getAnos().get(0), ELKI_RESULTS+"ELKI"+"_SUA_NOR.txt","SUA_NOR");	
 				
 				multienio.print(true, true,true, df, Ano.VALOR_ABSOLUTO, true,OUTPUT_PATH +"_SCORED.csv");
 			}

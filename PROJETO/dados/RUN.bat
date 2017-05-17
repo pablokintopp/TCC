@@ -5,7 +5,7 @@ copy ..\Preprocessamento\bin\Preprocessamento.class Preprocessamento.class
 
 SET YEAR=2014
 SET TYPE=ano
-SET DIR=e
+SET DIR=2014
 SET ORIGINAL_FILE=%DIR%.csv
 
 SET FILE_REL=%YEAR%_REL_NOR.csv

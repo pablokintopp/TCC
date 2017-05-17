@@ -49,6 +49,9 @@ public class Preprocessamento {
     //Utiliza o centroid para gerar saida com porcentagens explicando anomalia
 	 public static String CENTROID ="--centroid";
 	 
+	 //Utiliza o centroid para gerar saida com porcentagens explicando anomalia
+	 public static String DEBUGG_CENTROID ="--debug_centroid";
+	 
 	 //rankear top x categorias anormais de cada instancia
 	 public static String RANKING ="--ranking";
 		
@@ -106,6 +109,8 @@ public class Preprocessamento {
 			p.moduloFixCodIbge(args);
 		}else if(parametro.equals(DEBUG)) {
 			p.moduloDebug(args);
+		}else if(parametro.equals(DEBUGG_CENTROID)) {
+			p.moduloDebugCentroid(args);
 		}else{			
 			System.out.println("Parametro inválido");
 		}
@@ -113,6 +118,16 @@ public class Preprocessamento {
 	}
 	
 	
+	private void moduloDebugCentroid(String[] args) throws IOException {
+		String line;
+		while((line=in.readLine())!=null) {
+			String cols[] = line.split(";");
+			System.out.println(cols.length);
+		}
+		
+	}
+
+
 	private void moduloDebug(String[] args) throws IOException {
 		String line;
 		while((line=in.readLine())!=null) {
