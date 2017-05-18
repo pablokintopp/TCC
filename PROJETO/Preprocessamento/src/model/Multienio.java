@@ -99,8 +99,8 @@ public class Multienio {
 		
 		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile.contains(".csv")? outputFile:outputFile+".csv"), "utf-8"));
 		 
-				
-		System.out.println( "#Total instancias: "+anos.get(0).getPrefeituras().size());
+		for(Ano a : anos)		
+			System.out.println( "#Total instancias: "+a.getPrefeituras().size()+ " ("+a.getValor()+")");
 		String output = "";
 		if(header){
 			output ="#";

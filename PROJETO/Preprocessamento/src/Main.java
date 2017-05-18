@@ -117,6 +117,7 @@ public class Main {
 				for(Ano a : anos){					
 					multienio.addANo(a);
 				}
+				multienio.ajustaPrefeituras();
 				reader.readScores(multienio.getAnos().get(0), ELKI_RESULTS+"ELKI"+"_REL_NOR.txt","REL_NOR");			
 				reader.readScores(multienio.getAnos().get(0), ELKI_RESULTS+"ELKI"+"_SUA_NOR.txt","SUA_NOR");	
 				

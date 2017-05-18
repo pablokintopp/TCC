@@ -3,9 +3,9 @@ xcopy ..\Preprocessamento\bin\model /I /Y model
 copy ..\Preprocessamento\bin\Main.class Main.class
 copy ..\Preprocessamento\bin\Preprocessamento.class Preprocessamento.class
 
-SET YEAR=2013-2014
+SET YEAR=2014-2015
 SET TYPE=multi
-SET DIR=MULTI_2013_2014
+SET DIR=MULTI_2014_2015
 SET ORIGINAL_FILE=XXXX.csv
 
 SET FILE_REL=_REL_NOR.csv

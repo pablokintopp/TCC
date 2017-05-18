@@ -114,8 +114,10 @@ public class InputReader {
 				scores.add(score);
 				i--;				
 			}while(cols[i].contains("outlier"));
-			
-				int codigo = Integer.valueOf(cols[i]);
+				
+				int codigo = -1;
+				if(!cols[i].contains("-"))					
+					codigo = Integer.valueOf(cols[i]);
 				int indexPrefeitura = ano.getPrefeituras().indexOf(new Prefeitura(codigo, " ", " ", 1234));
 				if(indexPrefeitura >= 0 ){
 					ano.getPrefeituras().get(indexPrefeitura).getScores().addAll(scores);
