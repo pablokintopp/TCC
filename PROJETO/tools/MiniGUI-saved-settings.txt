@@ -1,28 +1,5 @@
 #Saved ELKI settings. First line is title, remaining lines are parameters.
-LOF_k70
-de.lmu.ifi.dbs.elki.application.KDDCLIApplication
--verbose
--verbose
--dbc
-FileBasedDatabaseConnection
--dbc.in
-D:\REPOSITORY\TCC\PROJETO\dados\2013_2014_2015_min.csv
--parser.labelIndices
-0
--time
--algorithm
-outlier.lof.LOF
--lof.k
-70
--evaluator
-NoAutomaticEvaluation
--resulthandler
-ResultWriter
--out
-D:\REPOSITORY\TCC\PROJETO\dados\LOF_RESULTS
-
 LOF_2014
-de.lmu.ifi.dbs.elki.application.KDDCLIApplication
 -verbose
 -verbose
 -dbc.in
@@ -41,4 +18,71 @@ ResultWriter
 -out
 D:\REPOSITORY\TCC\PROJETO\dados\OUTPUT_ELKI
 -out.silentoverwrite
+
+PDI
+de.lmu.ifi.dbs.elki.application.KDDCLIApplication
+-verbose
+-dbc.in
+C:\Users\Pablo\Desktop\PDI experimetnos\Poliestireno_1_14_06_2017.txt
+-parser.labelIndices
+0
+-dbc.filter
+normalization.columnwise.AttributeWiseMinMaxNormalization
+-time
+-algorithm
+outlier.lof.LOF
+-lof.k
+35
+-evaluator
+NoAutomaticEvaluation
+-resulthandler
+ResultWriter
+-out
+C:\Users\Pablo\Desktop\PDI experimetnos\Poliestireno_1_14_06_2017_escores
+-out.silentoverwrite
+
+Iris
+-verbose
+-verbose
+-dbc.in
+D:\Arquivos Arnaldo\Input\iris.csv
+-parser.labelIndices
+4
+-time
+-algorithm
+outlier.lof.LOF
+-lof.k
+12
+-evaluator
+NoAutomaticEvaluation
+-resulthandler
+ResultWriter,AutomaticVisualization,ExportVisualizations
+-out
+D:\Arquivos Arnaldo\Output\LOF_Iris_k_12
+-out.silentoverwrite
+-vis.output
+D:\Arquivos Arnaldo\Output\Plots
+
+Subjectiva
+de.lmu.ifi.dbs.elki.application.KDDCLIApplication
+-verbose
+-verbose
+-dbc.in
+D:\Arquivos Arnaldo\Input\subjetiva.csv
+-parser.labelIndices
+188
+-time
+-algorithm
+outlier.lof.LOF
+-lof.k
+38
+-evaluator
+NoAutomaticEvaluation
+-resulthandler
+ResultWriter,AutomaticVisualization,ExportVisualizations
+-out
+D:\Arquivos Arnaldo\Output\LOF_subjetiva_k_38
+-out.silentoverwrite
+-vis.output
+D:\Arquivos Arnaldo\Output\Plots_Subjectiva
 
